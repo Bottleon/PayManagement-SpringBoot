@@ -1,0 +1,35 @@
+¦§¦¡ src
+    ¦§¦¡main
+    ¦¢  ¦§¦¡java
+    ¦¢  ¦¢  ¦¦¦¡com
+    ¦¢  ¦¢      ¦¦¦¡example
+    ¦¢  ¦¢          ¦¦¦¡demo
+    ¦¢  ¦¢              ¦§¦¡base
+    ¦¢  ¦¢              ¦¢  ¦§¦¡controller
+    ¦¢  ¦¢              ¦¢  ¦§¦¡model
+    ¦¢  ¦¢              ¦¢  ¦§¦¡repository
+    ¦¢  ¦¢              ¦¢  ¦¦¦¡service
+    ¦¢  ¦¢              ¦§¦¡common
+    ¦¢  ¦¢              ¦¢  ¦§¦¡aop
+    ¦¢  ¦¢              ¦¢  ¦§¦¡config
+    ¦¢  ¦¢              ¦¢  ¦§¦¡exception
+    ¦¢  ¦¢              ¦¢  ¦§¦¡interceptor
+    ¦¢  ¦¢              ¦¢  ¦¦¦¡listener
+    ¦¢  ¦¢              ¦§¦¡hr
+    ¦¢  ¦¢              ¦¢  ¦§¦¡attendance
+    ¦¢  ¦¢              ¦¢  ¦§¦¡pay
+    ¦¢  ¦¢              ¦¢  ¦¦¦¡user
+    ¦¢  ¦¢              ¦¢      ¦§¦¡compositkey
+    ¦¢  ¦¢              ¦¢      ¦§¦¡controller
+    ¦¢  ¦¢              ¦¢      ¦§¦¡model
+    ¦¢  ¦¢              ¦¢      ¦§¦¡repository
+    ¦¢  ¦¢              ¦¢      ¦¦¦¡service
+    ¦¢  ¦¢              ¦¦¦¡store
+    ¦¢  ¦¢                  ¦§¦¡category
+    ¦¢  ¦¢                  ¦§¦¡chat
+    ¦¢  ¦¢                  ¦§¦¡checklist
+    ¦¢  ¦¢                  ¦§¦¡notice
+    ¦¢  ¦¢                  ¦¦¦¡schedule
+    ¦¢  ¦¦¦¡resources
+    ¦¢      ¦§¦¡static
+    ¦¢      ¦¦¦¡templates
