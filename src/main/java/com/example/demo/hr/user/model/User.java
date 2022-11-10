@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
+    @Column(name="user_id")
     private Long id;
 
     @NotNull

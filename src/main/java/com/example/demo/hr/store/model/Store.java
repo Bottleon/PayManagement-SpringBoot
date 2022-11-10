@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Table(name="store")
 public class Store {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="store_id")
     private Long id;
 
     @NotNull
