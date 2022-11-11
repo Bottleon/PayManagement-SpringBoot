@@ -1,4 +1,4 @@
-package com.example.demo.store.schedule.model;
+package com.example.demo.hr.attendance.model;
 
 import com.example.demo.hr.userstore.model.UserStore;
 import lombok.Data;
@@ -8,10 +8,9 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="schedule")
-public class Schedule {
+@Table(name="user_store_attendance")
+public class UserStoreAttedeance {
     @Id
-    @Column(name="schedule_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,9 +21,13 @@ public class Schedule {
     })
     private UserStore userStore;
 
-    @Column(name="start_time",nullable = false)
-    private Date startTime;
+    @ManyToOne
+    @JoinColumn(name="attendance_code",nullable = false)
+    private Attendance attendance;
 
-    @Column(name="finish_time",nullable = false)
-    private Date finishTime;
+    @Column(name="work_start_time")
+    private Date workStartTime;
+
+    @Column(name="work_finish_time")
+    private Date workFinishTime;
 }

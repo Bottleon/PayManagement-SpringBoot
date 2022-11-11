@@ -19,8 +19,8 @@ public class Notice {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name="user_id"),
-            @JoinColumn(name="store_id")
+            @JoinColumn(name="user_id",nullable = false),
+            @JoinColumn(name="store_id",nullable = false)
     })
     private UserStore userStore;
 
