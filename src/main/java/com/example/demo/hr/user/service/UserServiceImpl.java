@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUserById(Long userId) {
+    public User getUserById(String userId) {
         return userRepository.findById(userId)
                              .orElseThrow(()->
                                      new ResourceNotFoundException(userId+" 사용자를 찾을 수 없습니다.")
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User login(Long id, String pw) {
+    public User login(String id, String pw) {
         return userRepository.findUserByIdAndPassword(id,pw);
     }
 

@@ -1,5 +1,6 @@
 package com.example.demo.hr.user.model;
 
+import com.example.demo.hr.userstore.model.UserStore;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -7,6 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,21 +18,24 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @Column(name="user_id")
-    private Long id;
+    private String id;
 
-    @NotNull
+    @Column(name="password",nullable = false)
     private String password;
 
-    @NotNull
+    @Column(name="name",nullable = false)
     private String name;
 
-    @NotNull
+    @Column(name="gender",nullable = false)
     private String gender;
 
-    @NotNull
+    @Column(name="auth_type",nullable = false)
     private String authType;
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserStore> stores = new ArrayList<>();
 }
