@@ -17,11 +17,13 @@ public class Store {
     @Column(name="store_id")
     private Long id;
 
-    @NotNull
+    @Column(name="name",nullable = false)
     private String name;
-    @NotNull
+
+    @Column(name="store_phone_number",nullable = false)
     private String phoneNumber;
-    @NotNull
+
+    @Column(name="address",nullable = false)
     private String address;
 
     @Column(unique = true)

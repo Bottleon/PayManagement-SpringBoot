@@ -20,8 +20,8 @@ public class CheckList {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name="write_user_id",referencedColumnName = "user_id"),
-            @JoinColumn(name="store_id", referencedColumnName ="store_id")
+            @JoinColumn(name="write_user_id",referencedColumnName = "user_id",nullable = false),
+            @JoinColumn(name="store_id", referencedColumnName ="store_id",nullable = false)
     })
     private UserStore userStore;
 
@@ -33,7 +33,7 @@ public class CheckList {
     @CreatedDate
     private Date registDate;
 
-    @Column(name="content")
+    @Column(name="content",nullable = false)
     private String content;
 
 }

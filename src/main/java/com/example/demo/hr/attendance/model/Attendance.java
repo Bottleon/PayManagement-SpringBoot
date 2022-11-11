@@ -12,6 +12,6 @@ public class Attendance {
     @Column(name="attendance_code",updatable = false, insertable = false)
     private Long code;
 
-    @Column(name="attendance_type",updatable = false, insertable = false)
+    @Column(name="attendance_type",updatable = false, insertable = false,nullable = false)
     private String type;
 }
