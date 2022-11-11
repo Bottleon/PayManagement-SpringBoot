@@ -1,9 +1,12 @@
 package com.example.demo.hr.store.model;
 
+import com.example.demo.hr.userstore.model.UserStore;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +26,7 @@ public class Store {
 
     @Column(unique = true)
     private String inviteCode;
+
+    @OneToMany(mappedBy = "store")
+    private List<UserStore> users = new ArrayList<>();
 }

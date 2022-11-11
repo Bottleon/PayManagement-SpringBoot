@@ -7,8 +7,8 @@ import java.util.List;
 @Service
 public interface UserService {
     public List<User> getAllUsers();
-    public User getUserById(Long userId);
+    public User getUserById(String userId);
     public User createUser(User user);
 
-    public User login(Long id,String pw);
+    public User login(String id,String pw);
 }
