@@ -3,13 +3,17 @@ package com.example.demo.store.notice.model;
 import com.example.demo.hr.userstore.model.UserStore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name="notice")
+@EntityListeners(AuditingEntityListener.class)
 public class Notice {
     @Id
     @Column(name="notice_id")
@@ -24,16 +28,18 @@ public class Notice {
     })
     private UserStore userStore;
 
-    @Column(name="title",nullable = false)
+    @Column(name="title")
+    @NotNull
     private String title;
 
-    @Column(name = "content",nullable = false)
+    @Column(name = "content")
+    @NotNull
     private String content;
 
     @CreatedDate
     @Column(name="registe_date",updatable = false,nullable = false)
-    private Date registeDate;
+    private LocalDateTime registeDate;
 
     @Column(name="modify_date")
-    private Date modifyDate;
+    private LocalDateTime modifyDate;
 }

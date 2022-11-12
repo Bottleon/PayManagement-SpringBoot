@@ -4,6 +4,7 @@ import com.example.demo.hr.userstore.model.UserStore;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -24,6 +25,7 @@ public class UserStorePay {
     @JoinColumn(name="pay_code",nullable = false)
     private Pay pay;
 
-    @Column(name="amount_money",nullable = false)
+    @Column(name="amount_money")
+    @NotNull
     private int amountMoney;
 }

@@ -3,6 +3,7 @@ package com.example.demo.hr.pay.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -13,6 +14,7 @@ public class Pay {
     @Column(name="pay_code")
     private Long code;
 
-    @Column(name="pay_type",nullable = false)
+    @Column(name="pay_type")
+    @NotNull
     private String payType;
 }
