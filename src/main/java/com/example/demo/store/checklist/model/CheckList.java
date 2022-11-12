@@ -5,13 +5,17 @@ import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.userstore.model.UserStore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "checklist")
+@EntityListeners(AuditingEntityListener.class)
 public class CheckList {
     @Id
     @Column(name="checklist_id")
@@ -31,9 +35,10 @@ public class CheckList {
 
     @Column(name="regist_date",nullable = false,updatable = false)
     @CreatedDate
-    private Date registDate;
+    private LocalDateTime registDate;
 
-    @Column(name="content",nullable = false)
+    @Column(name="content")
+    @NotEmpty
     private String content;
 
 }

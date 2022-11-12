@@ -1,10 +1,10 @@
 package com.example.demo.hr.store.model;
 
 import com.example.demo.hr.userstore.model.UserStore;
-import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +17,16 @@ public class Store {
     @Column(name="store_id")
     private Long id;
 
-    @Column(name="name",nullable = false)
+    @Column(name="name")
+    @NotNull
     private String name;
 
-    @Column(name="store_phone_number",nullable = false)
+    @Column(name="store_phone_number")
+    @NotNull
     private String phoneNumber;
 
-    @Column(name="address",nullable = false)
+    @Column(name="address")
+    @NotNull
     private String address;
 
     @Column(unique = true)

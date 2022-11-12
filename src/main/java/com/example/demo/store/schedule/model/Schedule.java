@@ -4,6 +4,7 @@ import com.example.demo.hr.userstore.model.UserStore;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -22,9 +23,11 @@ public class Schedule {
     })
     private UserStore userStore;
 
-    @Column(name="start_time",nullable = false)
+    @Column(name="start_time")
+    @NotNull
     private Date startTime;
 
-    @Column(name="finish_time",nullable = false)
+    @Column(name="finish_time")
+    @NotNull
     private Date finishTime;
 }
