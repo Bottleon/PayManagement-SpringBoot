@@ -24,10 +24,10 @@ public class Schedule {
     private UserStore userStore;
 
     @Column(name="start_time")
-    @NotNull
+    @NotNull(message = "출근시간을 입력해 주세요")
     private Date startTime;
 
     @Column(name="finish_time")
-    @NotNull
+    @NotNull(message = "퇴근시간을 입력해 주세요")
     private Date finishTime;
 }

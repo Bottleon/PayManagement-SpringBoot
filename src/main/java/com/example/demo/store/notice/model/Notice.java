@@ -29,11 +29,11 @@ public class Notice {
     private UserStore userStore;
 
     @Column(name="title")
-    @NotNull
+    @NotNull(message = "제목을 입력해 주세요")
     private String title;
 
     @Column(name = "content")
-    @NotNull
+    @NotNull(message = "내용을 적어주세요")
     private String content;
 
     @CreatedDate

@@ -34,18 +34,20 @@ public class User {
     @Pattern(regexp = "^\\d{2,3}-?\\d{3,4}-?\\d{4}$")
     private String id;
 
+    @Column(name="password")
+    @NotNull(message = "비밀번호를 입력해 주세요")
     private String password;
 
     @Column(name="name")
-    @NotNull
+    @NotNull(message = "이름을 입력해 주세요")
     private String name;
 
     @Column(name="gender")
-    @NotNull
+    @NotNull(message = "성별을 선택해 주세요")
     private String gender;
 
     @Column(name="auth_type")
-    @NotNull
+    @NotNull(message = "근로자 혹은 고용주를 선택해 주세요")
     private String authType;
 
     @CreatedDate

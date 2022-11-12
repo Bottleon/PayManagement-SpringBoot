@@ -26,7 +26,6 @@ public class UserStoreAttedeance {
 
     @ManyToOne
     @JoinColumn(name="attendance_code")
-    @NotNull
     private Attendance attendance;
 
 

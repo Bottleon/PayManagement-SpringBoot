@@ -38,7 +38,7 @@ public class CheckList {
     private LocalDateTime registDate;
 
     @Column(name="content")
-    @NotEmpty
+    @NotEmpty(message = "체크리스트의 내용을 입력해 주세요")
     private String content;
 
 }

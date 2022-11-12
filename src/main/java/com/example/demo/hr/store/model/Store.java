@@ -18,15 +18,15 @@ public class Store {
     private Long id;
 
     @Column(name="name")
-    @NotNull
+    @NotNull(message = "가게이름을 입력해 주세요")
     private String name;
 
     @Column(name="store_phone_number")
-    @NotNull
+    @NotNull(message = "가게번호를 입력해 주세요")
     private String phoneNumber;
 
     @Column(name="address")
-    @NotNull
+    @NotNull(message = "가게주소를 입력해 주세요")
     private String address;
 
     @Column(unique = true)
