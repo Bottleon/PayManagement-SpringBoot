@@ -34,6 +34,8 @@ public class User {
     @Pattern(regexp = "^\\d{2,3}-?\\d{3,4}-?\\d{4}$")
     private String id;
 
+    @Column(name="password")
+    @NotNull
     private String password;
 
     @Column(name="name")
