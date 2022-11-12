@@ -19,10 +19,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(String userId) {
-        return userRepository.findById(userId)
-                             .orElseThrow(()->
-                                     new RuntimeException("abc")
-                             );
+        return userRepository.findById(userId).get();
     }
 
     @Override
