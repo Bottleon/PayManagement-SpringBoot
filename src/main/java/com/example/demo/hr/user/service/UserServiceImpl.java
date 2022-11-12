@@ -1,6 +1,5 @@
 package com.example.demo.hr.user.service;
 
-import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +19,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(String userId) {
-        return userRepository.findById(userId)
-                             .orElseThrow(()->
-                                     new ResourceNotFoundException(userId+" 사용자를 찾을 수 없습니다.")
-                             );
+        User user = userRepository.findById(userId).get();
+        return user;
     }
 
     @Override
     public User createUser(User user) {
+        user.setId(user.getId().replace("-","")); //user id(전화번호) 하이푼 제거
         return userRepository.save(user);
     }
 

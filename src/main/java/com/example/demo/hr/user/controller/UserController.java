@@ -4,9 +4,11 @@ import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -18,22 +20,22 @@ public class UserController {
     private User user;
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable("id") String id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable("id") @Valid final String id) {
+            return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/all")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @PostMapping("/save")
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user){
+        return ResponseEntity.ok(userService.createUser(user));
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody User user){
-        return userService.login(user.getId(),user.getPassword());
+    public ResponseEntity<User> login(@RequestBody @Valid User user){
+        return ResponseEntity.ok(userService.login(user.getId(),user.getPassword()));
     }
 }
