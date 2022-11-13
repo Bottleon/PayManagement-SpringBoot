@@ -1,10 +1,10 @@
 package com.example.demo.hr.user.controller;
 
+import com.example.demo.common.exception.IDDuplicatedException;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ public class UserController {
     private User user;
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") @Valid final String id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") final String id) {
             return ResponseEntity.ok(userService.getUserById(id));
     }
 
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody @Valid User user){
+    public ResponseEntity<User> login(@RequestBody User user){
         return ResponseEntity.ok(userService.login(user.getId(),user.getPassword()));
     }
 }

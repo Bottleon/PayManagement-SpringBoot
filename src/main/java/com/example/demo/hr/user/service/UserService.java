@@ -1,5 +1,6 @@
 package com.example.demo.hr.user.service;
 
+import com.example.demo.common.exception.IDDuplicatedException;
 import com.example.demo.hr.user.model.User;
 import org.springframework.stereotype.Service;
 
