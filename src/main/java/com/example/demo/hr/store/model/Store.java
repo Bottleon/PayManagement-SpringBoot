@@ -32,6 +32,6 @@ public class Store {
     @Column(unique = true)
     private String inviteCode;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
     private List<UserStore> users = new ArrayList<>();
 }
