@@ -1,15 +1,14 @@
-# PayManagement-SpringBoot
 
-# 아르바이트 수당종류
-***
+
+## 아르바이트 수당종류
 1. 연장수당(연장근로수당)
 2. 야간수당
 3. 휴일수당
 4. 주휴수당
 
 
-#사용이유
-##Object Validate Annotation @NotNull vs @Column(nullable=false)
+## 사용이유
+### Object Validate Annotation @NotNull vs @Column(nullable=false)
 ***
 *@NotNull*
 : Request Json Data를 Object로 변환시키는 과정에서 검사(Controller)
