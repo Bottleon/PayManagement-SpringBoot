@@ -13,20 +13,22 @@ import javax.xml.ws.Response;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/file")
 public class StorageController {
     @Autowired
     private StorageService storageService;
 
-    @PostMapping("/file")
+    @PostMapping("/{id}")
     public ResponseEntity<?> uploadImageToFileSystem(@RequestParam("image")MultipartFile file,@RequestParam("id") String id) throws IOException {
         String uploadImage = storageService.uploadImageToFileSystem(file,id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImage);
     }
-    @GetMapping("/{fileName}")
-    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String fileName) throws IOException {
-        byte[] imageData = storageService.downloadImageFromFileSystem(fileName);
+
+    @GetMapping("/{fileName}/{id}")
+    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String fileName,@PathVariable String id) throws IOException {
+
+        byte[] imageData = storageService.downloadImageFromFileSystem(fileName,id);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);

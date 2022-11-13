@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface StorageService {
     public String uploadImageToFileSystem(MultipartFile file,String id) throws IOException;
-    public byte[] downloadImageFromFileSystem(String fileName) throws IOException;
+    public byte[] downloadImageFromFileSystem(String fileName, String id) throws IOException;
 }
