@@ -6,6 +6,7 @@
 3. 휴일수당
 4. 주휴수당
 
+예외사항 : 상시근로자 수 *5인 미만* 사업장은 1,2,3번 해댱 안되고 주휴수당은 *상시근로자 수와 관계없음*
 
 ## 사용이유
 ### Object Validate Annotation @NotNull vs @Column(nullable=false)
