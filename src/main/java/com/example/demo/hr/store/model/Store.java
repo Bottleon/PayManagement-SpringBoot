@@ -13,9 +13,8 @@ import java.util.List;
 @Table(name="store")
 public class Store {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="store_id")
-    private Long id;
+    private Long id; //사업자등록번호
 
     @Column(name="name")
     @NotNull(message = "가게이름을 입력해 주세요")
@@ -31,6 +30,14 @@ public class Store {
 
     @Column(unique = true)
     private String inviteCode;
+
+    //사업자 규모(5인 미만,5인 이상)
+    @Column(name="size", nullable = false)
+    private String size;
+
+    //지각 허용시간
+    @Column(name="tardy_allow_time")
+    private String tardyAllowTime;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
     private List<UserStore> users = new ArrayList<>();
