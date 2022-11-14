@@ -15,7 +15,7 @@ import java.util.List;
 public class Store {
     @Id
     @Column(name="store_id")
-    @Pattern(regexp = "/([0-9]{3})-?([0-9]{2})-?([0-9]{5})/")
+    @Pattern(regexp = "^\\d{3}-?\\d{2}-?\\d{5}$")
     private String id; //사업자등록번호 :505-02-95947
 
     @Column(name="name")
@@ -26,12 +26,13 @@ public class Store {
     @NotNull(message = "가게번호를 입력해 주세요")
     private String phoneNumber;
 
-    @Column(name="address")
+    @Column(name="basic_address")
     @NotNull(message = "가게주소를 입력해 주세요")
-    private String address;
+    private String basicAddress;
 
-    @Column(unique = true)
-    private String inviteCode;
+    @Column(name="detail_address")
+    @NotNull(message = "가게주소를 입력해 주세요")
+    private String detailAddress;
 
     //사업자 규모(5인 미만,5인 이상)
     @Column(name="size", nullable = false)
@@ -41,6 +42,6 @@ public class Store {
     @Column(name="tardy_allow_time")
     private String tardyAllowTime;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private List<UserStore> users = new ArrayList<>();
 }

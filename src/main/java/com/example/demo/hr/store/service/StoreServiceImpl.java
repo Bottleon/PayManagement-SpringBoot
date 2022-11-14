@@ -60,16 +60,23 @@ public class StoreServiceImpl implements StoreService{
 
     @Override
     public Store createStore(Store store, User user) throws JsonProcessingException {
-        Optional<Store> optStore=storeRepository.findById(store.getId());
-        if(optStore.isPresent()){
-            throw new IDDuplicatedException("이미 가입한 사업장입니다");
-        }else{
-            UserStore userStore = new UserStore();
-            userStore.setStore(store);
-            userStore.setUser(user);
-            userStore.setAcceptStatus(true);
-            userStoreRepository.save(userStore);
-        }
+//        Optional<Store> optStore=storeRepository.findById(store.getId());
+//        if(optStore.isPresent()){
+//            throw new IDDuplicatedException("이미 가입한 사업장입니다");
+//        }else{
+//            storeRepository.save(store);
+//            UserStore userStore = new UserStore();
+//            userStore.setStore(store);
+//            userStore.setUser(user);
+//            userStore.setAcceptStatus(true);
+//            userStoreRepository.save(userStore);
+//        }
+        storeRepository.save(store);
+        UserStore userStore = new UserStore();
+        userStore.setStore(store);
+        userStore.setUser(user);
+        userStore.setAcceptStatus(true);
+        userStoreRepository.save(userStore);
         return store;
     }
 

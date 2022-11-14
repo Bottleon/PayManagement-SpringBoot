@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +27,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserById(String userId){
         //orElseThrow -> not exist object
-        User user = userRepository.findById(userId).orElseThrow(()->new IDNotExistException("존재하지 않은 ID입니다"));
-
-        return user;
+        return userRepository.findById(userId).orElseThrow(()->new IDNotExistException("존재하지 않은 ID입니다"));
     }
 
     @Override
