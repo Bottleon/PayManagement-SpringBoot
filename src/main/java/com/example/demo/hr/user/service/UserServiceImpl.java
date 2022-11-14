@@ -5,6 +5,7 @@ import com.example.demo.common.exception.IDNotExistException;
 import com.example.demo.common.exception.PWMissMatchException;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.repository.UserRepository;
+import com.example.demo.hr.userstore.model.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,8 @@ import java.util.List;
 public class Store {
     @Id
     @Column(name="store_id")
-    private Long id; //사업자등록번호
+    @Pattern(regexp = "/([0-9]{3})-?([0-9]{2})-?([0-9]{5})/")
+    private String id; //사업자등록번호 :505-02-95947
 
     @Column(name="name")
     @NotNull(message = "가게이름을 입력해 주세요")
