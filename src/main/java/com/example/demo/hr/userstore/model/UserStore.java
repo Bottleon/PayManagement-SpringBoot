@@ -27,4 +27,7 @@ public class UserStore {
     @Convert(converter = BooleanToYNConverter.class)
     @Column(name="accept_status")
     private boolean acceptStatus;
+
+    @Column(name="hourly_wage")
+    private String hourlyWage;
 }

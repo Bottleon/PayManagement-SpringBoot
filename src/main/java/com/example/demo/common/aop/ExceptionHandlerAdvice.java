@@ -29,7 +29,7 @@ public class ExceptionHandlerAdvice {
         responseErrors.put("detail",detail);
         responseErrors.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         responseErrors.put("status",HttpStatus.BAD_REQUEST.value());
-
+        log.error("에러 : "+e.getMessage());
         return responseErrors;
     }
     //error :400번
@@ -39,6 +39,7 @@ public class ExceptionHandlerAdvice {
         responseError.put("error",HttpStatus.BAD_REQUEST.getReasonPhrase());
         responseError.put("status",HttpStatus.BAD_REQUEST.value());
         responseError.put("message",re.getMessage());
+        log.error("에러 : "+re.getMessage());
         return responseError;
     }
     //error : 500번
@@ -48,6 +49,7 @@ public class ExceptionHandlerAdvice {
         responseError.put("error",HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         responseError.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
         responseError.put("message",ex.getMessage());
+        log.error("에러 : "+ex.getMessage());
         return responseError;
     }
 }

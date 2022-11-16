@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/store/*")
@@ -19,7 +20,7 @@ public class StoreController {
     StoreService storeService;
 
     @GetMapping("/business/{id}")
-    public ResponseEntity<Boolean> checkPlaceOfBusinessNumber(@PathVariable String id) throws JsonProcessingException {
+    public ResponseEntity<Boolean> checkPlaceOfBusinessNumber(@PathVariable String id) throws JsonProcessingException, UnsupportedEncodingException {
         return ResponseEntity.ok(storeService.checkPlaceOfBusinessNumber(id));
     }
 

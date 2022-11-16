@@ -11,16 +11,21 @@ import com.example.demo.hr.userstore.repository.UserStoreRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.core.IsNull;
+import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 @Slf4j
@@ -40,6 +45,13 @@ class DemoApplicationTests {
 	User employer;
 	Store store;
 	String[] genders = new String[]{"남성","여성"};
+
+	@BeforeTestClass
+	public void db삭제(){
+		userRepository.deleteAll();
+		storeRepository.deleteAll();
+		userStoreRepository.deleteAll();
+	}
 	//유저 회원가입했을 때
 	@Test
 	@Order(1)
@@ -62,19 +74,21 @@ class DemoApplicationTests {
 		user.setName("나나");
 		user.setPassword("b");
 		users.add(user);
-		for(User u:users){
-			userController.createUser(u);
-		}
+		userRepository.saveAll(users);
 	}
 
+
+	@Order(2)
+	@Test
 	void 로그인(){
 		User loginEmployer = new User();
 		loginEmployer.setId("01055555555");
 		loginEmployer.setPassword("b");
 		employer = userController.login(loginEmployer).getBody();
 	}
-	@Test
+
 	@Order(3)
+	@Test
 	void 사업장등록() throws JsonProcessingException {
 		로그인();
 		store = new Store();
@@ -90,7 +104,7 @@ class DemoApplicationTests {
 		storeController.createStore(store,employer);
 	}
 
-	@Test
+
 	@Order(4)
 	void 직원초대(){
 

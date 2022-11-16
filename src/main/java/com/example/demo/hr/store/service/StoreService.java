@@ -6,9 +6,11 @@ import com.example.demo.hr.userstore.model.UserStore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+
 @Service
 public interface StoreService {
-    public Boolean checkPlaceOfBusinessNumber(String id) throws JsonProcessingException;
+    public Boolean checkPlaceOfBusinessNumber(String id) throws JsonProcessingException, UnsupportedEncodingException;
     public Store createStore(Store store, User user) throws JsonProcessingException;
 
     public UserStore acceptUserInStore(Store store);

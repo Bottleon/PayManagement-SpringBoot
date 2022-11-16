@@ -35,7 +35,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user){
-        System.out.println(user);
         return ResponseEntity.ok(userService.login(user.getId(),user.getPassword()));
     }
 }

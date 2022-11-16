@@ -21,9 +21,10 @@ public class StorageServiceImpl implements StorageService{
     public String uploadImageToFileSystem(MultipartFile file,String id) throws IOException {
         File directory = new File(USER_DIRECTORY_PATH+id);
         String filePath=directory.getPath()+"\\"+file.getOriginalFilename();
-        System.out.println(directory.exists());
         if(directory.exists())
             FileUtils.cleanDirectory(directory);
+        else
+            directory.mkdir();
         file.transferTo(new File(filePath));
         return "파일 업로드 : "+filePath;
     }

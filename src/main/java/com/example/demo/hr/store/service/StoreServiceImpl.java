@@ -10,17 +10,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Request;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.net.URLEncoder;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -30,19 +32,26 @@ public class StoreServiceImpl implements StoreService{
     @Autowired
     private UserStoreRepository userStoreRepository;
     @Override
-    public Boolean checkPlaceOfBusinessNumber(String id) throws JsonProcessingException {
+    public Boolean checkPlaceOfBusinessNumber(String id) throws JsonProcessingException, UnsupportedEncodingException {
         id = id.replace("-","");
         Map<String, Object> result = new HashMap<>();
         RestTemplate restTemplate = new RestTemplate();
         String jsonInString;
-        String serviceKey = "w6GaTMTVKsK9bAPWI5riSfEnXRifcRlmVRZo5eWkRIv0Pp9Kn8%2B92xuI7BnVJFD7sl0eSSZganb5JjbtOIgRMg%3D%3D";
-        String url="https://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey="+serviceKey;
+        String serviceKey = "qWOt5pG6ygmUTox7EXU2LvDcIeSKui+Q3ZaXaNZ1Iaxe95LXz4rL5yVkK989nj/3lSCmw6MWG4a68NRdAuQWyA==";
+
+        String url="http://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey="+serviceKey;
+        JSONObject jsonObject = new JSONObject();
+        ArrayList<String> list = new ArrayList<>();
+        list.add(id);
+        jsonObject.put("b_no",list);
         HttpHeaders header = new HttpHeaders();
-        HttpEntity<?> entity = new HttpEntity<>(header);
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<?> entity = new HttpEntity<>(jsonObject.toString(),header);
 
-        UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).query(id).build();
+        UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 
-        ResponseEntity<?> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST,entity,Object.class);
+        ResponseEntity<?> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST,entity, Object.class);
 
         result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
         result.put("header", resultMap.getHeaders()); //헤더 정보 확인
@@ -52,31 +61,22 @@ public class StoreServiceImpl implements StoreService{
         ObjectMapper mapper = new ObjectMapper();
         jsonInString = mapper.writeValueAsString(resultMap.getBody());
         log.info(jsonInString);
-        if(HttpStatus.OK==resultMap.getStatusCode()){
-            return true;
-        }
-        return false;
+        return HttpStatus.OK == resultMap.getStatusCode();
     }
 
     @Override
     public Store createStore(Store store, User user) throws JsonProcessingException {
-//        Optional<Store> optStore=storeRepository.findById(store.getId());
-//        if(optStore.isPresent()){
-//            throw new IDDuplicatedException("이미 가입한 사업장입니다");
-//        }else{
-//            storeRepository.save(store);
-//            UserStore userStore = new UserStore();
-//            userStore.setStore(store);
-//            userStore.setUser(user);
-//            userStore.setAcceptStatus(true);
-//            userStoreRepository.save(userStore);
-//        }
-        storeRepository.save(store);
-        UserStore userStore = new UserStore();
-        userStore.setStore(store);
-        userStore.setUser(user);
-        userStore.setAcceptStatus(true);
-        userStoreRepository.save(userStore);
+        Optional<Store> optStore=storeRepository.findById(store.getId());
+        if(optStore.isPresent()){
+            throw new IDDuplicatedException("이미 가입한 사업장입니다");
+        }else{
+            storeRepository.save(store);
+            UserStore userStore = new UserStore();
+            userStore.setStore(store);
+            userStore.setUser(user);
+            userStore.setAcceptStatus(true);
+            userStoreRepository.save(userStore);
+        }
         return store;
     }
 

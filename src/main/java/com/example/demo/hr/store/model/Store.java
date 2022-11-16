@@ -39,8 +39,12 @@ public class Store {
     private String size;
 
     //지각 허용시간
-    @Column(name="tardy_allow_time")
-    private String tardyAllowTime;
+    @Column(name="late_allow_time")
+    private String lateAllowTime;
+
+    //쉬는시간
+    @Column(name="break_time")
+    private String breakTime;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private List<UserStore> users = new ArrayList<>();
