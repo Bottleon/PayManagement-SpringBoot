@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/store/*")
@@ -29,6 +30,7 @@ public class StoreController {
         return ResponseEntity.ok(storeService.createStore(store,user));
     }
 
+ 
     //초대코드 생성
     @GetMapping("/managed-store/code")
     public ResponseEntity<String> createInviteCode(){

@@ -1,6 +1,7 @@
 package com.example.demo.hr.user.controller;
 
 import com.example.demo.common.exception.IDDuplicatedException;
+import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,11 @@ public class UserController {
     @PostMapping("/save")
     public ResponseEntity<User> createUser(@RequestBody @Valid User user){
         return ResponseEntity.ok(userService.createUser(user));
+    }
+    //가게 리스트
+    @GetMapping("/stores")
+    public ResponseEntity<List<Store>> getAllStores(@RequestParam String userId){
+        return ResponseEntity.ok(userService.getAllStores(userId));
     }
 
     @PostMapping("/login")
