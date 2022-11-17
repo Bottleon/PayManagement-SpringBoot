@@ -54,6 +54,10 @@ public class User {
     @Column(updatable = false,nullable = false)
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @Column(name="profile_name")
+    private String profileName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<UserStore> stores = new ArrayList<>();
+
 }

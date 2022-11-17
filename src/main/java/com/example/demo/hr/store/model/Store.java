@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
 @Table(name="store")
 public class Store {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="store_id")
-    private Long id;
+    @Pattern(regexp = "^\\d{3}-?\\d{2}-?\\d{5}$")
+    private String id; //사업자등록번호 :505-02-95947
 
     @Column(name="name")
     @NotNull(message = "가게이름을 입력해 주세요")
@@ -25,13 +26,26 @@ public class Store {
     @NotNull(message = "가게번호를 입력해 주세요")
     private String phoneNumber;
 
-    @Column(name="address")
+    @Column(name="basic_address")
     @NotNull(message = "가게주소를 입력해 주세요")
-    private String address;
+    private String basicAddress;
 
-    @Column(unique = true)
-    private String inviteCode;
+    @Column(name="detail_address")
+    @NotNull(message = "가게주소를 입력해 주세요")
+    private String detailAddress;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    //사업자 규모(5인 미만,5인 이상)
+    @Column(name="size", nullable = false)
+    private String size;
+
+    //지각 허용시간
+    @Column(name="late_allow_time")
+    private String lateAllowTime;
+
+    //쉬는시간
+    @Column(name="break_time")
+    private String breakTime;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private List<UserStore> users = new ArrayList<>();
 }

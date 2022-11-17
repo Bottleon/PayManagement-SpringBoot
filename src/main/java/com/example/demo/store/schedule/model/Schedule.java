@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -25,9 +26,10 @@ public class Schedule {
 
     @Column(name="start_time")
     @NotNull(message = "출근시간을 입력해 주세요")
-    private Date startTime;
+    private LocalDateTime startTime;
 
     @Column(name="finish_time")
     @NotNull(message = "퇴근시간을 입력해 주세요")
-    private Date finishTime;
+    private LocalDateTime finishTime;
+
 }

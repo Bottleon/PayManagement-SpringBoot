@@ -24,6 +24,8 @@ public class LoggerAspect {
         }
 
         log.debug(type+name+"."+joinPoint.getSignature().getName()+"()");
+        log.info(type+name+"."+joinPoint.getSignature().getName()+"()");
+        log.error(type+name+"."+joinPoint.getSignature().getName()+"()");
 
         return joinPoint.proceed();
     }

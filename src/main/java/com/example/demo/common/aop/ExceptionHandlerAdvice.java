@@ -2,6 +2,7 @@ package com.example.demo.common.aop;
 
 import com.example.demo.common.exception.IDDuplicatedException;
 import com.example.demo.common.exception.IDNotExistException;
+import com.example.demo.common.exception.NotExistStore;
 import com.example.demo.common.exception.PWMissMatchException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,32 +23,35 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,Object> handleInvalidArgument(MethodArgumentNotValidException e){
         Map<String,Object> responseErrors = new HashMap<>();
-        Map<String,String> detail = new HashMap<>();
+        Map<String,String> data = new HashMap<>();
         e.getBindingResult().getFieldErrors().forEach(error->{
-            detail.put(error.getField(),error.getDefaultMessage());
+            data.put(error.getField(),error.getDefaultMessage());
         });
-        responseErrors.put("detail",detail);
+        responseErrors.put("data",data);
         responseErrors.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         responseErrors.put("status",HttpStatus.BAD_REQUEST.value());
-
+        responseErrors.put("message",e.getMessage());
+        log.error("에러 : "+e.getMessage());
         return responseErrors;
     }
     //error :400번
     @ExceptionHandler({IDDuplicatedException.class, IDNotExistException.class, PWMissMatchException.class})
-    public Map<String,Object> handleBadRequest(final RuntimeException re){
+    public ResponseEntity<Map<String,Object>> handleBadRequest(final RuntimeException re){
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error",HttpStatus.BAD_REQUEST.getReasonPhrase());
         responseError.put("status",HttpStatus.BAD_REQUEST.value());
         responseError.put("message",re.getMessage());
-        return responseError;
+        log.error("에러 : "+re.getMessage());
+        return ResponseEntity.badRequest().body(responseError);
     }
     //error : 500번
-    @ExceptionHandler( Exception.class )
+    @ExceptionHandler( {Exception.class, NotExistStore.class} )
     public Map<String,Object> handleAll(final Exception ex) {
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error",HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         responseError.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
         responseError.put("message",ex.getMessage());
+        log.error("에러 : "+ex.getMessage());
         return responseError;
     }
 }

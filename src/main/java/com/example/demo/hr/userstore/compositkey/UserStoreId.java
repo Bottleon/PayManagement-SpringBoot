@@ -12,5 +12,5 @@ import java.io.Serializable;
 public class UserStoreId implements Serializable {
 
     private String user;
-    private Long store;
+    private String store;
 }
