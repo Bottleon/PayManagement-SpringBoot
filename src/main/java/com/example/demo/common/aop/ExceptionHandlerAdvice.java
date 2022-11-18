@@ -21,7 +21,7 @@ public class ExceptionHandlerAdvice {
     //error : fail request object validate test
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String,Object> handleInvalidArgument(MethodArgumentNotValidException e){
+    public ResponseEntity<Map<String,Object>> handleInvalidArgument(MethodArgumentNotValidException e){
         Map<String,Object> responseErrors = new HashMap<>();
         Map<String,String> data = new HashMap<>();
         e.getBindingResult().getFieldErrors().forEach(error->{
@@ -32,7 +32,7 @@ public class ExceptionHandlerAdvice {
         responseErrors.put("status",HttpStatus.BAD_REQUEST.value());
         responseErrors.put("message",e.getMessage());
         log.error("에러 : "+e.getMessage());
-        return responseErrors;
+        return ResponseEntity.badRequest().body(responseErrors);
     }
     //error :400번
     @ExceptionHandler({IDDuplicatedException.class, IDNotExistException.class, PWMissMatchException.class})
@@ -46,12 +46,12 @@ public class ExceptionHandlerAdvice {
     }
     //error : 500번
     @ExceptionHandler( {Exception.class, NotExistStore.class} )
-    public Map<String,Object> handleAll(final Exception ex) {
+    public ResponseEntity<Map<String,Object>> handleAll(final Exception ex) {
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error",HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         responseError.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
         responseError.put("message",ex.getMessage());
         log.error("에러 : "+ex.getMessage());
-        return responseError;
+        return ResponseEntity.internalServerError().body(responseError);
     }
 }
