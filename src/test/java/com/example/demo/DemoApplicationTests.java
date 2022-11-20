@@ -64,15 +64,15 @@ class DemoApplicationTests {
 			user.setAuthType("근로자");
 			user.setGender(genders[i%2]);
 			user.setName("가가");
-			user.setPassword("a");
+			user.setPassword("12341234a");
 			users.add(user);
 		}
 		User user = new User();
-		user.setId("010-5555-5555");
+		user.setId("01055555555");
 		user.setAuthType("고용주");
 		user.setGender("여성");
 		user.setName("나나");
-		user.setPassword("b");
+		user.setPassword("12341234a");
 		users.add(user);
 		userRepository.saveAll(users);
 	}
