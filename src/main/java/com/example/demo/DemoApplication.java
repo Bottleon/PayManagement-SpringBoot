@@ -23,33 +23,33 @@ public class DemoApplication {
 	}
 
 
-//	@Bean
-//	CommandLineRunner run(UserService userService) {
-//		return args->{
-//			userService.saveRole(new Role(null,"ROLE_WORKER"));
-//			userService.saveRole(new Role(null,"ROLE_EMPLOYER"));
-//			userService.saveRole(new Role(null,"ROLE_ADMIN"));
-//
-//			userService.saveUser(User.builder()
-//										.id("01011111111")
-//										.gender("남성")
-//										.name("성환")
-//										.authType("근로자")
-//										.password("12341234a")
-//										.roles(new ArrayList<>())
-//										.build());
-//			userService.saveUser(User.builder()
-//					.id("01011111112")
-//					.gender("여성")
-//					.name("지미")
-//					.authType("고용주")
-//					.password("12341234a")
-//					.roles(new ArrayList<>())
-//					.build());
-//			userService.addRoleToUser("01011111111","ROLE_WORKER");
-//			userService.addRoleToUser("01011111112","ROLE_EMPLOYER");
-//			userService.addRoleToUser("01011111112","ROLE_ADMIN");
-//
-//		};
-//	}
+	@Bean
+	CommandLineRunner run(UserService userService) {
+		return args->{
+			userService.saveRole(new Role(null,"ROLE_WORKER"));
+			userService.saveRole(new Role(null,"ROLE_EMPLOYER"));
+			userService.saveRole(new Role(null,"ROLE_ADMIN"));
+
+			userService.saveUser(User.builder()
+										.id("01011111111")
+										.gender("남성")
+										.name("성환")
+										.authType("근로자")
+										.password("12341234a")
+										.roles(new ArrayList<>())
+										.build());
+			userService.saveUser(User.builder()
+					.id("01011111112")
+					.gender("여성")
+					.name("지미")
+					.authType("고용주")
+					.password("12341234a")
+					.roles(new ArrayList<>())
+					.build());
+			userService.addRoleToUser("01011111111","ROLE_WORKER");
+			userService.addRoleToUser("01011111112","ROLE_EMPLOYER");
+			userService.addRoleToUser("01011111112","ROLE_ADMIN");
+
+		};
+	}
 }

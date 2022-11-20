@@ -34,7 +34,7 @@ public class User {
     @Pattern(regexp = "^\\d{2,3}-?\\d{3,4}-?\\d{4}$")
     private String id;
 
-    @Column(name="password",length = 20)
+    @Column(name="password",length = 150)
     @Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$")
     @NotNull(message = "비밀번호를 입력해 주세요")
     private String password;
