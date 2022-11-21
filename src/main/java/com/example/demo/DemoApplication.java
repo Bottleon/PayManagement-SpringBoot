@@ -23,13 +23,14 @@ public class DemoApplication {
 	}
 
 
-//	@Bean
-//	CommandLineRunner run(UserService userService) {
-//		return args->{
+	/*@Bean
+	CommandLineRunner run(UserService userService) {
+		return args->{
+			userService.saveRole(new Role(null,"ROLE_USER"));
 //			userService.saveRole(new Role(null,"ROLE_WORKER"));
 //			userService.saveRole(new Role(null,"ROLE_EMPLOYER"));
 //			userService.saveRole(new Role(null,"ROLE_ADMIN"));
-//
+
 //			userService.saveUser(User.builder()
 //										.id("01011111111")
 //										.gender("남성")
@@ -46,10 +47,12 @@ public class DemoApplication {
 //					.password("12341234a")
 //					.roles(new ArrayList<>())
 //					.build());
+			userService.addRoleToUser("01011111111","ROLE_USER");
+			userService.addRoleToUser("01011111112","ROLE_USER");
 //			userService.addRoleToUser("01011111111","ROLE_WORKER");
 //			userService.addRoleToUser("01011111112","ROLE_EMPLOYER");
 //			userService.addRoleToUser("01011111112","ROLE_ADMIN");
-//
-//		};
-//	}
+
+		};
+	}*/
 }
