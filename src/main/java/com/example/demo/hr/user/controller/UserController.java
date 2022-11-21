@@ -1,23 +1,24 @@
 package com.example.demo.hr.user.controller;
 
-import com.example.demo.common.exception.IDDuplicatedException;
 import com.example.demo.hr.store.model.Store;
+import com.example.demo.hr.user.model.Role;
+import com.example.demo.hr.user.model.RoleToUserForm;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.service.UserService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = {"/user/*"})
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
-    private User user;
+    private final UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") final String id) {
@@ -29,10 +30,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<User> createUser(@RequestBody @Valid User user){
-        return ResponseEntity.ok(userService.createUser(user));
-    }
+
     //가게 리스트
     @GetMapping("/stores")
     public ResponseEntity<List<Store>> getAllStores(@RequestParam String userId){
@@ -41,6 +39,22 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user){
+        System.out.println(user.getId()+"----------"+user.getPassword());
         return ResponseEntity.ok(userService.login(user.getId(),user.getPassword()));
+    }
+    @PostMapping("/save")
+    public ResponseEntity<User> saveUser(@RequestBody @Valid User user){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/save").toUriString());
+        return ResponseEntity.created(uri).body(userService.saveUser(user));
+    }
+    @PostMapping("/role/save")
+    public ResponseEntity<Role> saveRole(@RequestBody Role role){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/role/save").toUriString());
+        return ResponseEntity.created(uri).body(userService.saveRole(role));
+    }
+    @PostMapping("/role/addtouser")
+    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
+        userService.addRoleToUser(form.getUserId(),form.getRoleName());
+        return ResponseEntity.ok().build();
     }
 }
