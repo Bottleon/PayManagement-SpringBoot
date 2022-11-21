@@ -40,27 +40,27 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         log.info("인증시도------------------------------");
         UsernamePasswordAuthenticationToken authenticationToken;
 
-        if(request.getContentType().equals(APPLICATION_JSON_VALUE)){ //aplication/json형태면
-            try {
-                log.info("json------------------------------");
-                User user = objectMapper.readValue(request.getReader().lines().collect(Collectors.joining()),User.class);
-                log.info(user.toString());
-                System.out.println("user id : "+user.getUsername()+", user pw : "+user.getPassword());
-                authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new AuthenticationServiceException("Request Content-Type(application/json) Parsing Error");
-            }
-        }else{
-            //form-request
-            String username = obtainUsername(request);
-            String password = obtainPassword(request);
-            authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
-        }
-//        String id = request.getParameter("username");
-//        String password = request.getParameter("password");
-//        log.info("username :{}, password :{}",id,password);
-//        authenticationToken = new UsernamePasswordAuthenticationToken(id,password);
+//        if(request.getContentType().equals(APPLICATION_JSON_VALUE)){ //aplication/json형태면
+//            try {
+//                log.info("json------------------------------");
+//                User user = objectMapper.readValue(request.getReader().lines().collect(Collectors.joining()),User.class);
+//                log.info(user.toString());
+//                System.out.println("user id : "+user.getUsername()+", user pw : "+user.getPassword());
+//                authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                throw new AuthenticationServiceException("Request Content-Type(application/json) Parsing Error");
+//            }
+//        }else{
+//            //form-request
+//            String username = obtainUsername(request);
+//            String password = obtainPassword(request);
+//            authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
+//        }
+        String id = request.getParameter("username");
+        String password = request.getParameter("password");
+        log.info("username :{}, password :{}",id,password);
+        authenticationToken = new UsernamePasswordAuthenticationToken(id,password);
         log.info("인증시도------------------------------");
         return authenticationManager.authenticate(authenticationToken);
     }

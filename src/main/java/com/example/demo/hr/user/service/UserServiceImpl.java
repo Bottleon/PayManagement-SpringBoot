@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     private final RoleRepository roleRepository;
     private final ApplicationContext context;
     @Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String id)throws UsernameNotFoundException {
         return userRepository.findById(id).orElseThrow(()->new IDNotExistException(id+" 사용자는 존재하지 않습니다."));
     }
 
@@ -72,6 +73,9 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         }
         BCryptPasswordEncoder passwordEncoder = (BCryptPasswordEncoder) context.getBean("passwordEncoder");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        addRoleToUser(user.getId(),"ROLE_USER");
+
         return userRepository.save(user);
     }
 
@@ -84,7 +88,6 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         if(!passwordEncoder.matches(pw,user.getPassword())){
             throw new PWMissMatchException("비밀번호가 일치하지 않습니다.");
         }
-
         return user;
     }
 

@@ -24,9 +24,7 @@ public class ExceptionHandlerAdvice {
     public ResponseEntity<Map<String,Object>> handleInvalidArgument(MethodArgumentNotValidException e){
         Map<String,Object> responseErrors = new HashMap<>();
         Map<String,String> data = new HashMap<>();
-        e.getBindingResult().getFieldErrors().forEach(error->{
-            data.put(error.getField(),error.getDefaultMessage());
-        });
+        e.getBindingResult().getFieldErrors().forEach(error-> data.put(error.getField(),error.getDefaultMessage()));
         responseErrors.put("data",data);
         responseErrors.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         responseErrors.put("status",HttpStatus.BAD_REQUEST.value());
