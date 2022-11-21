@@ -1,9 +1,13 @@
 package com.example.demo.hr.user.model;
 
 import com.example.demo.hr.userstore.model.UserStore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -28,7 +33,11 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails {
+    public User(String id,String password){
+        this.id=id;
+        this.password=password;
+    }
     @Id
     @Column(name="user_id",length=13)
     @Pattern(regexp = "^\\d{2,3}-?\\d{3,4}-?\\d{4}$")
@@ -63,5 +72,38 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
+    //@JsonDeserialize(using = CustomAuthorityDeserializer.class)
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        this.roles.forEach(role->{
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        return authorities;
+    }
 
+    @Override
+    public String getUsername() {
+        return this.id;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

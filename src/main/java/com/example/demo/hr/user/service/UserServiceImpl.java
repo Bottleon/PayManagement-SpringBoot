@@ -14,6 +14,7 @@ import com.example.demo.hr.userstore.model.UserStore;
 import com.example.demo.hr.userstore.repository.UserStoreRepository;
 import jdk.internal.dynalink.support.NameCodec;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,6 +34,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService,UserDetailsService {
     private final UserRepository userRepository;
     private final UserStoreRepository userStoreRepository;
@@ -41,12 +43,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     private final ApplicationContext context;
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        User user = userRepository.findById(id).orElseThrow(()->new IDNotExistException(id+" 사용자는 존재하지 않습니다."));
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role->{
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
-        return new org.springframework.security.core.userdetails.User(user.getId(),user.getPassword(), authorities);
+        return userRepository.findById(id).orElseThrow(()->new IDNotExistException(id+" 사용자는 존재하지 않습니다."));
     }
 
     @Override
@@ -56,6 +53,8 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 
     @Override
     public User getUserById(String userId){
+        log.debug("+++++++++++++++++++"+userId);
+        log.error(userId);
         //orElseThrow -> not exist object
         return userRepository.findById(userId).orElseThrow(()->new IDNotExistException("존재하지 않은 ID입니다"));
     }
@@ -71,21 +70,22 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         if(isExistUser.isPresent()){
             throw new IDDuplicatedException("이미 존재하는 ID입니다");
         }
-        PasswordEncoder passwordEncoder = (PasswordEncoder) context.getBean("passwordEncoder");
+        BCryptPasswordEncoder passwordEncoder = (BCryptPasswordEncoder) context.getBean("passwordEncoder");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
     public User login(String id, String pw) {
-        User user = getUserById(id);
+        log.debug(id+"------------"+pw);
+        User user = userRepository.findById(id).orElseThrow(()->new IDNotExistException(id+"가 존재하지 않습니다"));
 
-        PasswordEncoder passwordEncoder = (PasswordEncoder) context.getBean("passwordEncoder");
-        if(passwordEncoder.matches(user.getPassword(),pw)){
+        BCryptPasswordEncoder passwordEncoder = (BCryptPasswordEncoder) context.getBean("passwordEncoder");
+        if(!passwordEncoder.matches(pw,user.getPassword())){
             throw new PWMissMatchException("비밀번호가 일치하지 않습니다.");
         }
 
-        return userRepository.findUserByIdAndPassword(id,pw);
+        return user;
     }
 
     @Override

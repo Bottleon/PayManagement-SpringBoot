@@ -1,15 +1,11 @@
 package com.example.demo.hr.user.controller;
 
-import com.example.demo.common.exception.IDDuplicatedException;
 import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.user.model.Role;
 import com.example.demo.hr.user.model.RoleToUserForm;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.service.UserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,8 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    private User user;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") final String id) {
@@ -45,6 +39,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user){
+        System.out.println(user.getId()+"----------"+user.getPassword());
         return ResponseEntity.ok(userService.login(user.getId(),user.getPassword()));
     }
     @PostMapping("/save")
