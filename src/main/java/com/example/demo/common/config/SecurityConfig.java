@@ -51,12 +51,12 @@ public class SecurityConfig{
         http.httpBasic().disable();
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.formLogin().usernameParameter("id").passwordParameter("password").loginProcessingUrl("/user/login").failureHandler(loginFailureHandler()).permitAll();
         http.authorizeRequests().antMatchers("/user/login/**","/user/token/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(GET,"/api/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(GET,"/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(POST,"/store/**").hasAnyAuthority("ROLE_EMPLOYER");
         http.authorizeRequests().anyRequest().authenticated();
-        http.formLogin().loginProcessingUrl("/user/login").failureHandler(loginFailureHandler());
         http.authenticationProvider(customAuthenticationProvider());
         http.exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
