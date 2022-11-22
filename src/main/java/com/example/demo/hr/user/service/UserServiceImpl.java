@@ -36,15 +36,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class UserServiceImpl implements UserService,UserDetailsService {
+public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final UserStoreRepository userStoreRepository;
     private final StoreRepository storeRepository;
     private final RoleRepository roleRepository;
     private final ApplicationContext context;
     @Override
-    public UserDetails loadUserByUsername(String id)throws UsernameNotFoundException {
-        return userRepository.findById(id).orElseThrow(()->new IDNotExistException(id+" 사용자는 존재하지 않습니다."));
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        return userRepository.findById(id).orElseThrow(()->new UsernameNotFoundException( "아이디가 존재하지 않습니다"));
     }
 
     @Override

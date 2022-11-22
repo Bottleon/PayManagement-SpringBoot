@@ -5,11 +5,12 @@ import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.user.model.Role;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.userstore.model.UserStore;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public interface UserService {
+public interface UserService  extends UserDetailsService {
     public List<User> getAllUsers();
     public User getUserById(String userId);
     public User saveUser(User user);

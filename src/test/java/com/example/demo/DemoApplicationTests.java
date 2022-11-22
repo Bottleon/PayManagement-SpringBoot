@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
@@ -45,8 +46,13 @@ class DemoApplicationTests {
 	User employer;
 	Store store;
 	String[] genders = new String[]{"남성","여성"};
-
-	@BeforeTestClass
+	@Value("${jwt.secret}")
+	private String secret;
+	@Test
+	public void test(){
+		System.out.println(secret);
+	}
+/*	@BeforeTestClass
 	public void db삭제(){
 		userRepository.deleteAll();
 		storeRepository.deleteAll();
@@ -108,5 +114,5 @@ class DemoApplicationTests {
 	@Order(4)
 	void 직원초대(){
 
-	}
+	}*/
 }

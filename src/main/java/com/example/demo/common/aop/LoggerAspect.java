@@ -22,8 +22,6 @@ public class LoggerAspect {
         }else if(name.contains("Service")){
             type = "ServiceImpl --> ";
         }
-
-        log.debug(type+name+"."+joinPoint.getSignature().getName()+"()");
         log.info(type+name+"."+joinPoint.getSignature().getName()+"()");
         log.error(type+name+"."+joinPoint.getSignature().getName()+"()");
 

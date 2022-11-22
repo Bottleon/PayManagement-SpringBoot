@@ -2,10 +2,14 @@ package com.example.demo.common.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.example.demo.common.util.JWTUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -13,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 
 import javax.servlet.FilterChain;
@@ -29,11 +34,18 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @Slf4j
+@Component
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper objectMapper=new ObjectMapper();
+
+    @Value("${jwt.secret}")
+    private String secretKey;
+
+
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager){
-        this.authenticationManager=authenticationManager;
+        super(authenticationManager);
+        this.authenticationManager = authenticationManager;
     }
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -69,7 +81,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         //User user = (User) authentication.getPrincipal();
         log.info(authentication.getName());
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        log.error("secret key : {}",secretKey);
+        Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());
         String access_token = JWT.create()
                 .withSubject(authentication.getName())
                 .withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000))
@@ -91,4 +104,5 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(),tokens);
     }
+
 }

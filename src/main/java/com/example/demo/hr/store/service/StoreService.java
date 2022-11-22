@@ -4,6 +4,7 @@ import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.userstore.model.UserStore;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
