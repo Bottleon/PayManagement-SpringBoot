@@ -1,0 +1,3 @@
+jwt:
+  header: Authorization
+  secret: 15hjkh3125hljk1jhk235
