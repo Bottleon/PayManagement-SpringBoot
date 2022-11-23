@@ -5,8 +5,11 @@ import com.example.demo.common.exception.IDNotExistException;
 import com.example.demo.common.exception.NotExistStore;
 import com.example.demo.common.exception.PWMissMatchException;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -35,15 +38,23 @@ public class ExceptionHandlerAdvice {
     //error :400번
     @ExceptionHandler({IDDuplicatedException.class, IDNotExistException.class, PWMissMatchException.class})
     public ResponseEntity<Map<String,Object>> handleBadRequest(final RuntimeException re){
-        Map<String,Object> responseError = new HashMap<>();
-        responseError.put("error",HttpStatus.BAD_REQUEST.getReasonPhrase());
-        responseError.put("status",HttpStatus.BAD_REQUEST.value());
-        responseError.put("message",re.getMessage());
-        log.error("에러 : "+re.getMessage());
-        return ResponseEntity.badRequest().body(responseError);
+        return getMapResponseEntity(re,HttpStatus.BAD_REQUEST);
     }
+    //error : 401번
+    @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
+    public ResponseEntity<Map<String,Object>> handleUnAuthorized(final RuntimeException re){
+        if(re instanceof PWMissMatchException){
+            log.error("pw");
+        }else if(re instanceof  BadCredentialsException){
+            log.error("bad");
+        }
+        return getMapResponseEntity(re,HttpStatus.UNAUTHORIZED);
+    }
+
+
+
     //error : 500번
-    @ExceptionHandler( {Exception.class, NotExistStore.class} )
+    @ExceptionHandler( { NotExistStore.class} )
     public ResponseEntity<Map<String,Object>> handleAll(final Exception ex) {
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error",HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
@@ -51,5 +62,15 @@ public class ExceptionHandlerAdvice {
         responseError.put("message",ex.getMessage());
         log.error("에러 : "+ex.getMessage());
         return ResponseEntity.internalServerError().body(responseError);
+    }
+
+    @NotNull
+    private ResponseEntity<Map<String, Object>> getMapResponseEntity(RuntimeException re,HttpStatus status) {
+        Map<String,Object> responseError = new HashMap<>();
+        responseError.put("error", status.getReasonPhrase());
+        responseError.put("status",status.value());
+        responseError.put("message",re.getMessage());
+        log.error("에러 : "+re.getMessage());
+        return ResponseEntity.badRequest().body(responseError);
     }
 }
