@@ -5,6 +5,7 @@ import com.example.demo.hr.store.service.StoreService;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.userstore.model.UserStore;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/store/*")
+@RequiredArgsConstructor
 public class StoreController {
-    @Autowired
-    StoreService storeService;
+
+    private final StoreService storeService;
 
     @GetMapping("/business/{id}")
     public ResponseEntity<Boolean> checkPlaceOfBusinessNumber(@PathVariable String id) throws JsonProcessingException, UnsupportedEncodingException {
