@@ -3,7 +3,6 @@ package com.example.demo.hr.user.service;
 import com.example.demo.common.exception.IDDuplicatedException;
 import com.example.demo.common.exception.IDNotExistException;
 import com.example.demo.common.exception.NotExistStore;
-import com.example.demo.common.exception.PWMissMatchException;
 import com.example.demo.common.provider.JwtTokenProvider;
 import com.example.demo.common.token.TokenInfo;
 import com.example.demo.hr.store.model.Store;
@@ -16,7 +15,6 @@ import com.example.demo.hr.userstore.model.UserStore;
 import com.example.demo.hr.userstore.repository.UserStoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -38,7 +36,6 @@ public class UserServiceImpl implements UserService{
     private final UserStoreRepository userStoreRepository;
     private final StoreRepository storeRepository;
     private final RoleRepository roleRepository;
-    private final ApplicationContext context;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -90,7 +87,7 @@ public class UserServiceImpl implements UserService{
         try{
             authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         }catch(BadCredentialsException bce){
-            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+            throw new BadCredentialsException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성

@@ -1,9 +1,6 @@
 package com.example.demo.common.aop;
 
-import com.example.demo.common.exception.IDDuplicatedException;
-import com.example.demo.common.exception.IDNotExistException;
-import com.example.demo.common.exception.NotExistStore;
-import com.example.demo.common.exception.PWMissMatchException;
+import com.example.demo.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -43,11 +40,6 @@ public class ExceptionHandlerAdvice {
     //error : 401번
     @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
     public ResponseEntity<Map<String,Object>> handleUnAuthorized(final RuntimeException re){
-        if(re instanceof PWMissMatchException){
-            log.error("pw");
-        }else if(re instanceof  BadCredentialsException){
-            log.error("bad");
-        }
         return getMapResponseEntity(re,HttpStatus.UNAUTHORIZED);
     }
 

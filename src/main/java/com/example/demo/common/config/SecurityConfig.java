@@ -1,6 +1,8 @@
 package com.example.demo.common.config;
 
+import com.example.demo.common.entrypoint.CustomAuthenticationEntryPoint;
 import com.example.demo.common.filter.JwtAuthenticationFilter;
+import com.example.demo.common.handler.CustomAccessDeniedHandler;
 import com.example.demo.common.provider.JwtTokenProvider;
 import com.example.demo.hr.user.service.UserService;
 import com.example.demo.hr.user.service.UserServiceImpl;
@@ -48,6 +50,9 @@ public class SecurityConfig{
         http.authorizeRequests().antMatchers(GET,"/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(POST,"/store/**").hasAnyAuthority("ROLE_EMPLOYER");
         http.authorizeRequests().anyRequest().authenticated();
+        http.exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

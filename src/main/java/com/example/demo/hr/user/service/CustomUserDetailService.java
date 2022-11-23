@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException,BadCredentialsException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails userDetails;
             userDetails = userRepository.findById(username)
                     .map(this::createUserDetails)
