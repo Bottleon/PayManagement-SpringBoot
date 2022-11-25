@@ -33,7 +33,7 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity.badRequest().body(responseErrors);
     }
     //error :400번
-    @ExceptionHandler({IDDuplicatedException.class, IDNotExistException.class, PWMissMatchException.class})
+    @ExceptionHandler({IDDuplicatedException.class, IDNotExistException.class, PWMissMatchException.class,MessageVarificationFailed.class})
     public ResponseEntity<Map<String,Object>> handleBadRequest(final RuntimeException re){
         return getMapResponseEntity(re,HttpStatus.BAD_REQUEST);
     }
