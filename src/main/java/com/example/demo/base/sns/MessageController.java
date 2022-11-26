@@ -48,7 +48,7 @@ public class MessageController {
     }
 
     @PostMapping("/verification")
-    public ResponseEntity<Boolean> verificationMessage(@RequestBody CertificationNumber certificationNumber){
+    public ResponseEntity<CertificationNumber> verificationMessage(@RequestBody CertificationNumber certificationNumber){
         return ResponseEntity.ok(messageServiceThis.varificationMessage(certificationNumber));
     }
 }

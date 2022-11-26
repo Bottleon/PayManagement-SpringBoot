@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,9 +24,9 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,Object>> handleInvalidArgument(MethodArgumentNotValidException e){
         Map<String,Object> responseErrors = new HashMap<>();
-        Map<String,String> data = new HashMap<>();
-        e.getBindingResult().getFieldErrors().forEach(error-> data.put(error.getField(),error.getDefaultMessage()));
-        responseErrors.put("data",data);
+        //e.getBindingResult().getFieldErrors().forEach(error-> data.put(error.getField(),error.getDefaultMessage()));
+        ObjectError objectError = e.getBindingResult().getAllErrors().stream().findFirst().get();
+        responseErrors.put("defaultMessage",objectError.getDefaultMessage());
         responseErrors.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         responseErrors.put("status",HttpStatus.BAD_REQUEST.value());
         responseErrors.put("message",e.getMessage());
@@ -46,7 +47,7 @@ public class ExceptionHandlerAdvice {
 
 
     //error : 500번
-    @ExceptionHandler( { NotExistStore.class} )
+    @ExceptionHandler( { NotExistStore.class, CloneNotSupportedException.class} )
     public ResponseEntity<Map<String,Object>> handleAll(final Exception ex) {
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error",HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
@@ -61,7 +62,7 @@ public class ExceptionHandlerAdvice {
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error", status.getReasonPhrase());
         responseError.put("status",status.value());
-        responseError.put("message",re.getMessage());
+        responseError.put("message","서버 내부 오류");
         log.error("에러 : "+re.getMessage());
         return ResponseEntity.badRequest().body(responseError);
     }

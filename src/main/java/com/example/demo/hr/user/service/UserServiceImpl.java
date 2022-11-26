@@ -64,13 +64,17 @@ public class UserServiceImpl implements UserService{
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        User saveUser = user.clone();
+        log.error("save user hashcode:{}, exist user hashcode:{},saved user password : {}, user password:{}",saveUser,user,saveUser.getPassword(),user.getPassword());
+        saveUser.setPassword(passwordEncoder.encode(saveUser.getPassword()));
+        userRepository.save(saveUser);
         addRoleToUser(user.getId(),"ROLE_USER");
         if(user.getAuthType().equals("근로자")){
             addRoleToUser(user.getId(),"ROLE_WORKER");
         }else{
             addRoleToUser(user.getId(),"ROLE_EMPLOYER");
         }
-        return userRepository.save(user);
+        return user;
     }
 
     @Override
