@@ -33,18 +33,15 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails {
-    public User(String id,String password){
-        this.id=id;
-        this.password=password;
-    }
+public class User implements UserDetails,Cloneable {
+
     @Id
     @Column(name="user_id",length=13)
-    @Pattern(regexp = "^\\d{2,3}-?\\d{3,4}-?\\d{4}$")
+    @NotNull(message = "사용자의 아이디를 입력해주세요")
+    @Pattern(regexp = "^\\d{2,3}-?\\d{3,4}-?\\d{4}$",message = "전화번호 형식이 아닙니다.")
     private String id;
 
     @Column(name="password",length = 150)
-    @Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$")
     @NotNull(message = "비밀번호를 입력해 주세요")
     private String password;
 
@@ -105,5 +102,16 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public User clone() {
+        try {
+            User clone = (User) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

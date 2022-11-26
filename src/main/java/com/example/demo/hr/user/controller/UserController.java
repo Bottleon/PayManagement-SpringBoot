@@ -45,7 +45,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenInfo> login(@RequestBody User user){
-        System.out.println(user.getId()+"----------"+user.getPassword());
         return ResponseEntity.ok(userService.login(user.getId(),user.getPassword()));
     }
     @PostMapping("/save")

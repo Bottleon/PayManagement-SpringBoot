@@ -46,7 +46,7 @@ public class SecurityConfig{
         http.httpBasic().disable();
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/user/login/**","/user/token/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers("/user/login/**","/user/token/refresh/**","/user/save","/sns/**","/user/role/addtorole").permitAll();
         http.authorizeRequests().antMatchers(GET,"/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(POST,"/store/**").hasAnyAuthority("ROLE_EMPLOYER");
         http.authorizeRequests().anyRequest().authenticated();

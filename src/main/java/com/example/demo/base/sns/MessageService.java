@@ -20,11 +20,11 @@ public class MessageService {
 
         messageRepository.save(certificationNumber1);
     }
-    public boolean varificationMessage(CertificationNumber certificationNumber){
+    public CertificationNumber varificationMessage(CertificationNumber certificationNumber){
         Optional<CertificationNumber> isCertification = messageRepository.findById(certificationNumber.getId());
         if(isCertification.isPresent()){
             if(isCertification.get().getCertificationNumber().equals(certificationNumber.getCertificationNumber())){
-                return true;
+                return isCertification.get();
             }else{
                 throw new MessageVarificationFailed("인증번호가 일치하지 않습니다.");
             }
