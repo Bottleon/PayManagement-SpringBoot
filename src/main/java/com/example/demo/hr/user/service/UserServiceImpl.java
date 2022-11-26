@@ -4,6 +4,7 @@ import com.example.demo.common.exception.IDDuplicatedException;
 import com.example.demo.common.exception.IDNotExistException;
 import com.example.demo.common.exception.NotExistStore;
 import com.example.demo.common.provider.JwtTokenProvider;
+import com.example.demo.common.redis.RedisUtil;
 import com.example.demo.common.token.TokenInfo;
 import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.store.repository.StoreRepository;
@@ -19,7 +20,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService{
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final RedisUtil redisUtil;
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -74,6 +75,8 @@ public class UserServiceImpl implements UserService{
         }else{
             addRoleToUser(user.getId(),"ROLE_EMPLOYER");
         }
+
+        redisUtil.deleteData(user.getId());
         return user;
     }
 
@@ -93,7 +96,6 @@ public class UserServiceImpl implements UserService{
         }catch(BadCredentialsException bce){
             throw new BadCredentialsException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
-
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         return jwtTokenProvider.generateToken(authentication);
     }
