@@ -63,19 +63,15 @@ public class UserServiceImpl implements UserService{
         if(isExistUser.isPresent()){
             throw new IDDuplicatedException("이미 존재하는 ID입니다");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        User saveUser = user.clone();
-        log.error("save user hashcode:{}, exist user hashcode:{},saved user password : {}, user password:{}",saveUser,user,saveUser.getPassword(),user.getPassword());
-        saveUser.setPassword(passwordEncoder.encode(saveUser.getPassword()));
-        userRepository.save(saveUser);
-        addRoleToUser(user.getId(),"ROLE_USER");
+        addRoleToUser(user,"ROLE_USER");
         if(user.getAuthType().equals("근로자")){
-            addRoleToUser(user.getId(),"ROLE_WORKER");
+            addRoleToUser(user,"ROLE_WORKER");
         }else{
-            addRoleToUser(user.getId(),"ROLE_EMPLOYER");
+            addRoleToUser(user,"ROLE_EMPLOYER");
         }
 
+        userRepository.save(user);
         redisUtil.deleteData(user.getId());
         return user;
     }
@@ -109,15 +105,8 @@ public class UserServiceImpl implements UserService{
         }
         return stores;
     }
-
     @Override
-    public Role saveRole(Role role) {
-        return roleRepository.save(role);
-    }
-
-    @Override
-    public void addRoleToUser(String userId , String roleName) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new IDNotExistException("사용자를 찾을 수 없음"));
+    public void addRoleToUser(User user , String roleName) {
         Role role = roleRepository.findByName(roleName);
         user.getRoles().add(role);
     }

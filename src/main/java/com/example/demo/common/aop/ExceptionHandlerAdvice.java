@@ -52,7 +52,7 @@ public class ExceptionHandlerAdvice {
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error",HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         responseError.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
-        responseError.put("message",ex.getMessage());
+        responseError.put("message","서버 내부 오류");
         log.error("에러 : "+ex.getMessage());
         return ResponseEntity.internalServerError().body(responseError);
     }
@@ -62,7 +62,7 @@ public class ExceptionHandlerAdvice {
         Map<String,Object> responseError = new HashMap<>();
         responseError.put("error", status.getReasonPhrase());
         responseError.put("status",status.value());
-        responseError.put("message","서버 내부 오류");
+        responseError.put("message",re.getMessage());
         log.error("에러 : "+re.getMessage());
         return ResponseEntity.badRequest().body(responseError);
     }
