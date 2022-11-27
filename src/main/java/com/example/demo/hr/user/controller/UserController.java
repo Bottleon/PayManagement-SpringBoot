@@ -52,14 +52,4 @@ public class UserController {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
-    @PostMapping("/role/save")
-    public ResponseEntity<Role> saveRole(@RequestBody Role role){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/role/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveRole(role));
-    }
-    @PostMapping("/role/addtouser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
-        userService.addRoleToUser(form.getUserId(),form.getRoleName());
-        return ResponseEntity.ok().build();
-    }
 }

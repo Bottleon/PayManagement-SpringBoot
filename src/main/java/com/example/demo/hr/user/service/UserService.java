@@ -16,7 +16,6 @@ public interface UserService{
     public TokenInfo login(String id, String pw);
 
     public List<Store> getAllStores(String userId);
-    public Role saveRole(Role role);
-    public void addRoleToUser(String userId,String roleName);
+    public void addRoleToUser(User user,String roleName);
 
 }
