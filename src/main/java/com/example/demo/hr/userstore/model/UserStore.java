@@ -4,7 +4,11 @@ import com.example.demo.common.converter.BooleanToYNConverter;
 import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.userstore.compositkey.UserStoreId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,11 +16,15 @@ import javax.persistence.*;
 @Entity
 @Table(name="user_store")
 @IdClass(UserStoreId.class)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserStore {
 
     @Id
     @ManyToOne
     @JoinColumn(name="user_id")
+    @JsonBackReference
     private User user;
 
     @Id
@@ -26,7 +34,7 @@ public class UserStore {
 
     @Convert(converter = BooleanToYNConverter.class)
     @Column(name="accept_status")
-    private boolean acceptStatus;
+    private boolean acceptStatus = false;
 
     @Column(name="hourly_wage")
     private String hourlyWage;

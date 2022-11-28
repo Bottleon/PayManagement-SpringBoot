@@ -41,11 +41,13 @@ public class UserServiceImpl implements UserService{
     private final BCryptPasswordEncoder passwordEncoder;
     private final RedisUtil redisUtil;
     @Override
+    @Transactional
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
+    @Transactional
     public User getUserById(String userId){
         log.error(userId);
         //orElseThrow -> not exist object
@@ -53,6 +55,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User saveUser(User user){
         user.setId(user.getId().replace("-","")); //user id(전화번호) 하이푼 제거
 
@@ -97,6 +100,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public List<Store> getAllStores(String userId) {
         List<UserStore> userStores = userStoreRepository.findUserStoreByUser_Id(userId);
         List<Store> stores = new ArrayList<>();
@@ -106,6 +110,7 @@ public class UserServiceImpl implements UserService{
         return stores;
     }
     @Override
+    @Transactional
     public void addRoleToUser(User user , String roleName) {
         Role role = roleRepository.findByName(roleName);
         user.getRoles().add(role);

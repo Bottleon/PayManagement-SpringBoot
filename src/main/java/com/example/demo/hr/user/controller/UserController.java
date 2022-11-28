@@ -2,20 +2,16 @@ package com.example.demo.hr.user.controller;
 
 import com.example.demo.common.token.TokenInfo;
 import com.example.demo.hr.store.model.Store;
-import com.example.demo.hr.user.model.Role;
-import com.example.demo.hr.user.model.RoleToUserForm;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.service.UserService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 
@@ -39,6 +35,7 @@ public class UserController {
 
     //가게 리스트
     @GetMapping("/stores")
+    @JsonIgnore
     public ResponseEntity<List<Store>> getAllStores(@RequestParam String userId){
         return ResponseEntity.ok(userService.getAllStores(userId));
     }
