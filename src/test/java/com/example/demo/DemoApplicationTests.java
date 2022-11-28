@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.common.exception.IDNotExistException;
 import com.example.demo.hr.store.controller.StoreController;
 import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.store.repository.StoreRepository;
@@ -46,11 +47,25 @@ class DemoApplicationTests {
 	User employer;
 	Store store;
 	String[] genders = new String[]{"남성","여성"};
-	@Value("${jwt.secret}")
-	private String secret;
 	@Test
 	public void test(){
-		System.out.println(secret);
+		store = Store.builder()
+				.id("505-02-95947")
+				.basicAddress("대구 달서구 신당동 11-1")
+				.detailAddress("301호")
+				.breakTime("60")
+				.lateAllowTime("10")
+				.name("갈비스")
+				.size("3")
+				.phoneNumber("053-111-1111")
+				.build();
+		employer = userRepository.findById("01011111112").orElseThrow(()->new IDNotExistException("유저없음"));
+		UserStore userStore = UserStore.builder()
+				.store(store)
+				.user(employer)
+				.build();
+		storeRepository.save(store);
+		userStoreRepository.save(userStore);
 	}
 /*	@BeforeTestClass
 	public void db삭제(){

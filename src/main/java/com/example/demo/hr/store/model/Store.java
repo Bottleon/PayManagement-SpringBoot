@@ -1,7 +1,11 @@
 package com.example.demo.hr.store.model;
 
 import com.example.demo.hr.userstore.model.UserStore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +16,9 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="store")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Store {
     @Id
     @Column(name="store_id")
@@ -47,5 +54,6 @@ public class Store {
     private String breakTime;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<UserStore> users = new ArrayList<>();
 }

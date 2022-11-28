@@ -1,6 +1,9 @@
 package com.example.demo.hr.user.model;
 
 import com.example.demo.hr.userstore.model.UserStore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -65,6 +68,7 @@ public class User implements UserDetails,Cloneable {
     private String profileName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<UserStore> stores = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
