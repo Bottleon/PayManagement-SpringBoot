@@ -73,9 +73,9 @@ public class UserServiceImpl implements UserService{
         }else{
             addRoleToUser(user,"ROLE_EMPLOYER");
         }
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        redisUtil.deleteData(user.getId());
+        //redisUtil.deleteData(user.getId());
         return user;
     }
 

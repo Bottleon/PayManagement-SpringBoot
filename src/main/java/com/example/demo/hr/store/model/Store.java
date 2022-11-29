@@ -54,6 +54,5 @@ public class Store {
     private String breakTime;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<UserStore> users = new ArrayList<>();
 }

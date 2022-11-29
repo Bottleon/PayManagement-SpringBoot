@@ -24,7 +24,6 @@ public class UserStore {
     @Id
     @ManyToOne
     @JoinColumn(name="user_id")
-    @JsonBackReference
     private User user;
 
     @Id
