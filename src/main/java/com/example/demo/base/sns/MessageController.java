@@ -1,7 +1,5 @@
 package com.example.demo.base.sns;
 
-import com.example.demo.hr.user.model.CertificationNumber;
-import lombok.RequiredArgsConstructor;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -48,7 +46,7 @@ public class MessageController {
     }
 
     @PostMapping("/verification")
-    public ResponseEntity<CertificationNumber> verificationMessage(@RequestBody CertificationNumber certificationNumber){
-        return ResponseEntity.ok(messageServiceThis.varificationMessage(certificationNumber));
+    public ResponseEntity<UserMessage> verificationMessage(@RequestBody UserMessage userMessage){
+        return ResponseEntity.ok(messageServiceThis.varificationMessage(userMessage));
     }
 }
