@@ -34,7 +34,7 @@ dependencies {
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	implementation "org.springframework.boot:spring-boot-starter-security"
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0'
+	//implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0'
 
 	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
