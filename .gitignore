@@ -37,3 +37,7 @@ out/
 .vscode/
 
 log.txt
+
+### security ###
+application-security.properties
+application.yml

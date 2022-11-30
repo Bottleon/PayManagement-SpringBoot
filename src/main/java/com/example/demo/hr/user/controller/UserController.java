@@ -1,11 +1,9 @@
 package com.example.demo.hr.user.controller;
 
 import com.example.demo.common.token.TokenInfo;
-import com.example.demo.hr.store.model.ResponseStoreList;
 import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.user.service.UserService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +34,8 @@ public class UserController {
 
     //가게 리스트
     @GetMapping("/stores")
-    @JsonIgnore
-    public ResponseEntity<ResponseStoreList> getAllStores(@RequestParam String userId){
-        ResponseStoreList responseStoreList = new ResponseStoreList();
-        responseStoreList.setStores(userService.getAllStores(userId));
-        return ResponseEntity.ok(responseStoreList);
+    public ResponseEntity<List<Store>> getAllStores(@RequestParam String userId){
+        return ResponseEntity.ok(userService.getAllStores(userId));
     }
 
     @PostMapping("/login")

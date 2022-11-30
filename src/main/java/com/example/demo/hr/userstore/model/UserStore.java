@@ -5,6 +5,7 @@ import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.user.model.User;
 import com.example.demo.hr.userstore.compositkey.UserStoreId;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,10 +25,12 @@ public class UserStore {
     @Id
     @ManyToOne
     @JoinColumn(name="user_id")
+    @JsonManagedReference
     private User user;
 
     @Id
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name="store_id")
     private Store store;
 
