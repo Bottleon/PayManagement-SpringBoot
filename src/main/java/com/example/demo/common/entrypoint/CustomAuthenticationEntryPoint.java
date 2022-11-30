@@ -2,7 +2,6 @@ package com.example.demo.common.entrypoint;
 
 import com.example.demo.common.util.SecurityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

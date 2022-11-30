@@ -22,10 +22,7 @@ public class Notice {
 
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name="user_id",nullable = false),
-            @JoinColumn(name="store_id",nullable = false)
-    })
+    @JoinColumn(name="user_store_id",nullable = false)
     private UserStore userStore;
 
     @Column(name="title")
