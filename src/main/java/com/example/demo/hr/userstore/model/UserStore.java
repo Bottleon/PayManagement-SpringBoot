@@ -27,10 +27,12 @@ public class UserStore {
 
     @ManyToOne
     @JoinColumn(name="user_id")
+    @JsonManagedReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name="store_id")
+    @JsonManagedReference
     private Store store;
 
     @Convert(converter = BooleanToYNConverter.class)

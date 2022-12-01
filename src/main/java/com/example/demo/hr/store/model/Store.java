@@ -2,6 +2,7 @@ package com.example.demo.hr.store.model;
 
 import com.example.demo.hr.userstore.model.UserStore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -56,6 +57,6 @@ public class Store {
     private String breakTime;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("store")
+    @JsonIgnore
     private List<UserStore> users = new ArrayList<>();
 }
