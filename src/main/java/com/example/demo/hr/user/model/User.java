@@ -66,7 +66,7 @@ public class User implements UserDetails,Cloneable {
     private String profileName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("user")
+    @JsonIgnore
     private List<UserStore> stores = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
