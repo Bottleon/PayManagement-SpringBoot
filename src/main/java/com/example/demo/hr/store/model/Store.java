@@ -55,8 +55,4 @@ public class Store {
     //쉬는시간
     @Column(name="break_time")
     private String breakTime;
-
-    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<UserStore> users = new ArrayList<>();
 }

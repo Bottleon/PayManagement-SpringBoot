@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Data
@@ -27,11 +28,14 @@ public class CheckList {
     private UserStore userStore;
 
     @Column(name="regist_date",nullable = false,updatable = false)
-    @CreatedDate
-    private LocalDateTime registDate;
+    private String registDate;
 
     @Column(name="content")
     @NotEmpty(message = "체크리스트의 내용을 입력해 주세요")
     private String content;
 
+    @PrePersist
+    public void onPrePersist(){
+        this.registDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 }

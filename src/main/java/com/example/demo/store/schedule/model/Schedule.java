@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Data
@@ -23,10 +24,20 @@ public class Schedule {
 
     @Column(name="start_time")
     @NotNull(message = "출근시간을 입력해 주세요")
-    private LocalDateTime startTime;
+    private String startTime;
 
     @Column(name="finish_time")
     @NotNull(message = "퇴근시간을 입력해 주세요")
-    private LocalDateTime finishTime;
+    private String finishTime;
 
+    @PrePersist
+    public void onPrePersist(){
+        this.startTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.finishTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    @PreUpdate
+    public void onPreUpdate(){
+        this.startTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.finishTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 }

@@ -1,7 +1,12 @@
-/*
 package com.example.demo;
 
 import com.example.demo.common.exception.IDNotExistException;
+import com.example.demo.hr.attendance.model.Attendance;
+import com.example.demo.hr.attendance.repository.AttendanceRepository;
+import com.example.demo.hr.pay.model.Pay;
+import com.example.demo.hr.pay.model.UserStorePay;
+import com.example.demo.hr.pay.repository.PayRepository;
+import com.example.demo.hr.pay.repository.UserStorePayRepository;
 import com.example.demo.hr.store.controller.StoreController;
 import com.example.demo.hr.store.model.Store;
 import com.example.demo.hr.store.repository.StoreRepository;
@@ -12,25 +17,14 @@ import com.example.demo.hr.user.repository.RoleRepository;
 import com.example.demo.hr.user.repository.UserRepository;
 import com.example.demo.hr.userstore.model.UserStore;
 import com.example.demo.hr.userstore.repository.UserStoreRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
-import org.hamcrest.core.IsNull;
-import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 @Slf4j
@@ -52,7 +46,50 @@ class DemoApplicationTests {
 	User employer;
 	Store store;
 	String[] genders = new String[]{"남성","여성"};
-	@Test
+    @Autowired
+    PayRepository payRepository;
+	@Autowired
+	AttendanceRepository attendanceRepository;
+	@Autowired
+	UserStorePayRepository userStorePayRepository;
+	/*@Test
+	public void addUserStorePay(){
+		Pay pay = payRepository.findPayByPayType("시급");
+		UserStore userStore = userStoreRepository.findUserStoreByUserIdAndStoreId("01011111112","505-02-95937");
+
+		UserStorePay userStorePay = UserStorePay.builder()
+				.userStore(userStore)
+				.amountMoney(9160)
+				.pay(pay)
+				.build();
+
+		userStorePayRepository.save(userStorePay);
+	}*/
+    /*@Test
+    public void addAttendance(){
+		Attendance attendance = new Attendance(null,"출근");
+		Attendance attendance1 = new Attendance(null,"퇴근");
+		Attendance attendance2 = new Attendance(null,"지각");
+		Attendance attendance3 = new Attendance(null,"결근");
+		List<Attendance> attendanceList = new ArrayList<>();
+		attendanceList.add(attendance1);
+		attendanceList.add(attendance2);
+		attendanceList.add(attendance3);
+		attendanceList.add(attendance);
+		attendanceRepository.saveAll(attendanceList);
+    }*/
+    /*@Test
+    public void addPay(){
+        Pay pay = new Pay(null,"시급");
+        Pay pay2 = new Pay(null,"주급");
+        Pay pay3 = new Pay(null,"월급");
+        List<Pay> pays = new ArrayList<>();
+        pays.add(pay);
+        pays.add(pay2);
+        pays.add(pay3);
+        payRepository.saveAll(pays);
+    }*/
+	/*@Test
 	public void test(){
 		store = Store.builder()
 				.id("505-02-95947")
@@ -71,16 +108,10 @@ class DemoApplicationTests {
 				.build();
 		storeRepository.save(store);
 		userStoreRepository.save(userStore);
-	}
-	@Test
-	public void db삭제(){
-		userRepository.deleteAll();
-		storeRepository.deleteAll();
-		userStoreRepository.deleteAll();
-	}
+	}*/
+
 	//유저 회원가입했을 때
-	@Test
-	@Order(1)
+	/*@Test
 	void 회원가입(){
         roleRepository.save(new Role(null,"ROLE_USER"));
         roleRepository.save(new Role(null,"ROLE_WORKER"));
@@ -107,7 +138,6 @@ class DemoApplicationTests {
         for(User u : users){
             userController.saveUser(u);
         }
-	}
+	}*/
 
 }
-*/

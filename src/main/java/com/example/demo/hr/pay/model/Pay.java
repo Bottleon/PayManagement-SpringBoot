@@ -1,6 +1,9 @@
 package com.example.demo.hr.pay.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,6 +11,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @Table(name="pay")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Pay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
