@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Data
@@ -33,10 +34,17 @@ public class Notice {
     @NotNull(message = "내용을 적어주세요")
     private String content;
 
-    @CreatedDate
     @Column(name="registe_date",updatable = false,nullable = false)
-    private LocalDateTime registeDate;
+    private String registeDate;
 
     @Column(name="modify_date")
-    private LocalDateTime modifyDate;
+    private String modifyDate;
+    @PrePersist
+    public void onPrePersist(){
+        this.registeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    @PreUpdate
+    public void onPreUpdate(){
+        this.modifyDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 }

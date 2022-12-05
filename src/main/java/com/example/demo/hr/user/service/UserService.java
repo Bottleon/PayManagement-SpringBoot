@@ -7,7 +7,7 @@ import com.example.demo.hr.user.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
+
 public interface UserService{
     public List<User> getAllUsers();
     public User getUserById(String userId);

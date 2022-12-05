@@ -1,6 +1,9 @@
 package com.example.demo.hr.attendance.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,12 +11,16 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @Table(name="attendance")
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class Attendance {
     @Id
-    @Column(name="attendance_code",updatable = false, insertable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="attendance_code")
     private Long code;
 
-    @Column(name="attendance_type",updatable = false, insertable = false)
+    @Column(name="attendance_type")
     @NotNull
     private String type;
 }

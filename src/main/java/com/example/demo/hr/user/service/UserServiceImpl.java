@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public List<Store> getAllStores(String userId) {
-        List<UserStore> userStores = userStoreRepository.findUserStoreByUser_Id(userId);
+        List<UserStore> userStores = userStoreRepository.findUserStoreByUserId(userId);
         List<Store> stores = new ArrayList<>();
         for(UserStore us : userStores){
             stores.add(storeRepository.findById(us.getStore().getId()).orElseThrow(()->new NotExistStore("서버 내부 오류")));
