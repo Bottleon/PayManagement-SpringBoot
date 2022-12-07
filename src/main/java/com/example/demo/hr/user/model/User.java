@@ -68,6 +68,15 @@ public class User implements UserDetails,Cloneable {
     @Column(name="profile_name",length=50)
     private String profileName;
 
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
     @PrePersist
     public void onPrePersist(){
         this.createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

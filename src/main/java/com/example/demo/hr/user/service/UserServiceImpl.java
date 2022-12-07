@@ -16,6 +16,7 @@ import com.example.demo.hr.userstore.model.UserStore;
 import com.example.demo.hr.userstore.repository.UserStoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -82,32 +83,21 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public TokenInfo login(String id, String pw) {
-        log.debug(id+"------------"+pw);
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, pw);
-
-        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
-        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
-        Authentication authentication;
+        log.error(id+"=============="+pw);
+        UsernamePasswordAuthenticationToken authenticationToken;
         try{
-            authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            authenticationToken = new UsernamePasswordAuthenticationToken(id, pw);
         }catch(BadCredentialsException bce){
             throw new BadCredentialsException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
+        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         return jwtTokenProvider.generateToken(authentication);
-    }
-
-    @Override
-    @Transactional
-    public List<Store> getAllStores(String userId) {
-        List<UserStore> userStores = userStoreRepository.findUserStoreByUserId(userId);
-        List<Store> stores = new ArrayList<>();
-        for(UserStore us : userStores){
-            stores.add(storeRepository.findById(us.getStore().getId()).orElseThrow(()->new NotExistStore("서버 내부 오류")));
-        }
-        return stores;
     }
     @Override
     @Transactional
