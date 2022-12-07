@@ -32,12 +32,6 @@ public class UserController {
     }
 
 
-    //가게 리스트
-    @GetMapping("/stores")
-    public ResponseEntity<List<Store>> getAllStores(@RequestParam String userId){
-        return ResponseEntity.ok(userService.getAllStores(userId));
-    }
-
     @PostMapping("/login")
     public ResponseEntity<TokenInfo> login(@RequestBody User user){
         return ResponseEntity.ok(userService.login(user.getId(),user.getPassword()));
