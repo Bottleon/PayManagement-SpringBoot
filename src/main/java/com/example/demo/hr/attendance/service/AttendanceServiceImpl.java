@@ -36,7 +36,8 @@ public class AttendanceServiceImpl implements AttendanceService{
                 .orElseThrow(()-> new StartTimeException("출근기록이 없습니다."));
         userStoreAttendance.setWorkFinishTime(attendance.getWorkFinishTime());
         userStoreAttendance.setAttendance(attendanceRepository.findAttendanceByType(attendance.getAttendance().getType()));
-
-        return userStoreAttendanceRepository.saveAndFlush(userStoreAttendance);
+        UserStoreAttendance usa = userStoreAttendanceRepository.saveAndFlush(userStoreAttendance);
+        attendance.setWorkFinishTime((usa.getWorkFinishTime()));
+        return attendance;
     }
 }

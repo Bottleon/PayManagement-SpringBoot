@@ -1,7 +1,10 @@
 package com.example.demo.store.notice.model;
 
 import com.example.demo.hr.userstore.model.UserStore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,6 +18,9 @@ import java.util.Date;
 @Entity
 @Table(name="notice")
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Notice {
     @Id
     @Column(name="notice_id")

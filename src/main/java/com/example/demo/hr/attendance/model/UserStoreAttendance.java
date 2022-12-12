@@ -26,11 +26,11 @@ public class UserStoreAttendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_store_id",nullable = false)
     private UserStore userStore;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="attendance_code")
     private Attendance attendance;
 

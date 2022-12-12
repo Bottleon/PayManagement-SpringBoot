@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface UserStoreAttendanceRepository extends JpaRepository<UserStoreAttendance,Long> {
     Optional<UserStoreAttendance> findTopByUserStoreIdAndWorkFinishTimeIsNullOrderByWorkStartTimeDesc(Long userStore_id);
+    
 }
